@@ -1,9 +1,19 @@
+
+/* 
+Player playing with which piece?
+
+RelationShip = Player has-A Playingpiece
+
+*/
+
+import PlayingPiece from "./playingPiece";
+
 export default class Player {
     name: string;
-    character: string;
+    piece: PlayingPiece;
 
-    constructor(name: string, char: string) {
+    constructor(name: string, piece: PlayingPiece) {
         this.name = name;
-        this.character = char;
+        this.piece = piece;
     }
 }
