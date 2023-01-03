@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "target": "ES2019",
+      "outDir": "./dist",
+      "module": "CommonJS",
+      "moduleResolution": "node"
+    },
+    "exclude": [
+      "node_modules"
+    ]
+  }
