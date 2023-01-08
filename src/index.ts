@@ -1,28 +1,50 @@
-import Game from "./game";
+
+import { createInterface } from "readline";
+
+import Game, { GameState } from "./game";
 import Player from "./player";
 import Board from "./board";
 import { PlayingPieceX } from "./PlayingPieceX";
 import { PlayingPieceO } from "./PlayingPieceO";
 
-// step 1 
-// create Piece and assign to player
+let r2 = createInterface({
+   input: process.stdin,
+   output: process.stdout
+});
 
-const crossPiece = new PlayingPieceX();
-const p1 = new Player("abc",crossPiece);
+  const crossPiece = new PlayingPieceX();
+  const p1 = new Player("Mayur",crossPiece);
+  
+  const zeroPiece = new PlayingPieceO();
+  const p2 = new Player("Aayush",zeroPiece);
+  
+  const board = new Board(3);
+  const game = new Game(p1, p2, board);
+  
 
-const zeroPiece = new PlayingPieceO();
-const p2 = new Player("abc",zeroPiece);
+playGame();
 
-// step 2 
-// create board and add players 
-const board = new Board();
+function playGame() {    
+    let activePlayer = game.activePlayer;
+    console.log("Game Status - Number of moves",game.numberOfMoves)
+    r2.question(`${activePlayer.name} your turn ${activePlayer.piece.pieceType}} enter row and col e.g. 10 or 00 \n Enter: `, (ans => {
 
-// board.printBoard();
-const game = new Game(p1, p2, board);
+        const input = ans.split("");
+        if(input.length<=2) {
+            game.move(Number(input[0]), Number(input[1]), activePlayer.piece);
 
-game.board.addPiece(1,0,new PlayingPieceX());
-game.board.addPiece(1,1,new PlayingPieceX());
-game.board.addPiece(1,2,new PlayingPieceX());
-
-board.printBoard();
-console.log(game.checkWinner(1,0, crossPiece));
+   
+            if (game.currentGameState === GameState.INPROGRESS) {
+                playGame();
+            } else if(game.currentGameState === GameState.WIN) {
+                console.log(`Winner ${game.activePlayer.name}`)
+            }
+            else if(game.currentGameState === GameState.DRAW) {
+                console.log(`Draw`)
+            }    
+        } else {
+            console.log("invalid move - try again")
+            playGame();
+        }
+    }));
+}

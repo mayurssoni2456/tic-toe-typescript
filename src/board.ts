@@ -1,39 +1,27 @@
-import { Pattern } from "./pattern.type";
 import PlayingPiece from "./playingPiece";
-import { PlayingPieceX } from "./PlayingPieceX";
-
-const size = 3;
 
 export default class Board {
-    gameBoard:Array<Array<PlayingPiece>>;
+    size: number;
+    gameBoard:PlayingPiece[][] = [];
+ 
 
-    constructor() {
-        this.gameBoard = [];
+    constructor(size: number) {
+        this.size = size;
+        // harcode 3 x 3 for now
+        this.gameBoard = [[null,null,null],[null,null,null],[null,null,null]];
+        console.log(`board ${this.gameBoard}`);
 
-        for (let i = 0; i < size; i++) {
-            this.gameBoard.push(new Array(size).fill(null))
-        }
-    }
-
-    printBoard() {
-        for(let i = 0; i<3; i++) {
-            for(let j = 0; j<3; j++) {
-                if(this.gameBoard[i][j] != null) {
-                    console.log(`${i} ${j} - ${this.gameBoard[i][j].pieceType}  |`);
-                } else {
-                    console.log("   ");
-                }
-                // console.log(" | ");
-            }
-            console.log("\n");
-        }
     }
     
-    addPiece(row: number, col: number, playingPiece: PlayingPiece): boolean {
-        if(this.gameBoard[row][col] != null) {
-            return false;
+    addPiece(r: number, c: number, playingPiece: PlayingPiece): boolean {
+        console.log("gameboard ", this.gameBoard);
+
+        if (this.gameBoard[r][c] == null) {
+            this.gameBoard[r][c] = playingPiece;
+            console.log("gameboard ", this.gameBoard);
+            return true;
         }
-        this.gameBoard[row][col] = playingPiece;
-        return true;
+
+        return false;
     }
 }

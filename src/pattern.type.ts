@@ -1,5 +1,6 @@
 
 export enum Pattern {
     X = "X",
-    O = "O"
+    O = "O",
+    zero = "0"
 }
